@@ -175,7 +175,7 @@
         .reduce((sum, d) => sum + d.valor, 0);
       
       document.getElementById('total-pendente').textContent = 
-        "MT " + totalPendente.toFixed(2).replace('.', ',');
+        " mzn " + totalPendente.toFixed(2).replace('.', ',');
     }
 
     async function marcarComoPago(id) {
@@ -287,4 +287,5 @@
     window.onload = function() {
       const hoje = new Date().toISOString().split('T')[0];
       document.getElementById('input-data').value = hoje;
+
     };
