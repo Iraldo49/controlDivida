@@ -3,18 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>💰 ControlaDívidas - Sistema de Cobranças</title>
+    <title>💰 ControlaDívidas Pro - Sistema Inteligente de Cobranças</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.css">
     <link rel="stylesheet" href="css/styles.css">
 </head>
-<body>
+<body data-theme="light">
+    <!-- Theme Toggle Button -->
+    <button class="theme-toggle" id="theme-toggle">
+        <i class="fas fa-moon"></i>
+    </button>
+
     <div class="app-container">
-        <!-- Header com saudação -->
+        <!-- Header com saudação dinâmica -->
         <header class="header">
             <div class="header-content">
                 <div class="logo">
                     <i class="fas fa-hand-holding-usd"></i>
-                    <h1>ControlaDívidas</h1>
+                    <div>
+                        <h1>ControlaDívidas Pro</h1>
+                        <span class="greeting" id="greeting"></span>
+                    </div>
                 </div>
                 <div class="header-stats">
                     <div class="stat-item">
@@ -22,15 +31,29 @@
                         <span class="stat-value" id="total-devedores">0</span>
                     </div>
                     <div class="stat-item">
-                        <span class="stat-label">Dívidas Pendentes</span>
-                        <span class="stat-value" id="total-pendentes">0</span>
+                        <span class="stat-label">Vencidas</span>
+                        <span class="stat-value danger" id="total-vencidas">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">A Vencer</span>
+                        <span class="stat-value success" id="total-avencer">0</span>
                     </div>
                 </div>
             </div>
         </header>
 
         <div class="content-wrapper">
-            <!-- Card de Resumo Financeiro -->
+            <!-- Gráficos -->
+            <div class="charts-grid">
+                <div class="chart-card">
+                    <canvas id="statusChart"></canvas>
+                </div>
+                <div class="chart-card">
+                    <canvas id="vencimentoChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Cards de Resumo -->
             <div class="summary-cards">
                 <div class="summary-card total-pendente">
                     <div class="card-icon">
@@ -52,13 +75,13 @@
                     </div>
                 </div>
 
-                <div class="summary-card info-card" onclick="copiarDadosBancarios()">
+                <div class="summary-card vencidas-card">
                     <div class="card-icon">
-                        <i class="fas fa-copy"></i>
+                        <i class="fas fa-exclamation-triangle"></i>
                     </div>
                     <div class="card-info">
-                        <span class="card-label">Dados Bancários</span>
-                        <span class="card-value">Clique para copiar</span>
+                        <span class="card-label">Dívidas Vencidas</span>
+                        <span class="card-value" id="total-vencidas-valor">MT 0,00</span>
                     </div>
                 </div>
             </div>
@@ -67,6 +90,10 @@
             <div class="card form-card">
                 <div class="card-header">
                     <h2><i class="fas fa-plus-circle"></i> Adicionar Nova Dívida</h2>
+                    <div class="prazo-info">
+                        <i class="fas fa-info-circle"></i>
+                        <span>Prazo em dias para pagamento</span>
+                    </div>
                 </div>
                 <form id="form-devedor">
                     <div class="form-grid">
@@ -78,8 +105,15 @@
                         </div>
 
                         <div class="input-group">
+                            <label for="input-email">
+                                <i class="fas fa-envelope"></i> E-mail
+                            </label>
+                            <input type="email" id="input-email" placeholder="devedor@email.com">
+                        </div>
+
+                        <div class="input-group">
                             <label for="input-telefone">
-                                <i class="fas fa-phone"></i> Telefone (para cobrança)
+                                <i class="fas fa-phone"></i> Telefone (WhatsApp)
                             </label>
                             <input type="tel" id="input-telefone" placeholder="Ex: 258846178342">
                         </div>
@@ -93,9 +127,16 @@
 
                         <div class="input-group">
                             <label for="input-data">
-                                <i class="fas fa-calendar"></i> Data de Vencimento
+                                <i class="fas fa-calendar"></i> Data da Dívida
                             </label>
-                            <input type="date" id="input-data">
+                            <input type="date" id="input-data" required>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="input-prazo">
+                                <i class="fas fa-hourglass-half"></i> Prazo (dias)
+                            </label>
+                            <input type="number" id="input-prazo" min="1" value="30" required placeholder="30">
                         </div>
 
                         <div class="input-group full-width">
@@ -117,9 +158,17 @@
             <div class="card list-card">
                 <div class="card-header">
                     <h2><i class="fas fa-list"></i> Lista de Devedores</h2>
-                    <div class="search-box">
-                        <i class="fas fa-search"></i>
-                        <input type="text" id="search-input" placeholder="Buscar devedor...">
+                    <div class="filter-controls">
+                        <div class="search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="search-input" placeholder="Buscar devedor...">
+                        </div>
+                        <select id="filter-status" class="filter-select">
+                            <option value="todos">Todos</option>
+                            <option value="pendente">Pendentes</option>
+                            <option value="pago">Pagos</option>
+                            <option value="vencido">Vencidos</option>
+                        </select>
                     </div>
                 </div>
 
@@ -129,7 +178,7 @@
             </div>
         </div>
 
-        <!-- Footer com informações bancárias -->
+        <!-- Footer com informações bancárias e mensagens -->
         <footer class="footer">
             <div class="footer-content">
                 <div class="bank-info">
@@ -158,10 +207,45 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="mensagens-predefinidas">
+                    <h4><i class="fas fa-comment-dots"></i> Mensagens de Cobrança</h4>
+                    <div class="mensagens-buttons">
+                        <button class="msg-btn" onclick="mostrarPreviewMensagem('whatsapp')">
+                            <i class="fab fa-whatsapp"></i> WhatsApp
+                        </button>
+                        <button class="msg-btn" onclick="mostrarPreviewMensagem('email')">
+                            <i class="fas fa-envelope"></i> E-mail
+                        </button>
+                        <button class="msg-btn" onclick="mostrarPreviewMensagem('sms')">
+                            <i class="fas fa-sms"></i> SMS
+                        </button>
+                    </div>
+                </div>
             </div>
         </footer>
     </div>
 
+    <!-- Modal de Preview de Mensagem -->
+    <div id="mensagemModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-eye"></i> Preview da Mensagem</h3>
+                <button class="close-modal" onclick="fecharModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <pre id="mensagemPreview" class="mensagem-preview"></pre>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="fecharModal()">Fechar</button>
+                <button class="btn btn-primary" id="copiarMensagemBtn" onclick="copiarMensagemPreview()">
+                    <i class="fas fa-copy"></i> Copiar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
     <script src="js/app.js"></script>
 </body>
 </html>
