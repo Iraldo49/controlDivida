@@ -374,20 +374,187 @@
             font-size: 1.75rem;
         }
 
-        .prazo-info {
+        /* Botão Adicionar */
+        .btn-add {
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 100px;
+            font-weight: 600;
             display: flex;
             align-items: center;
             gap: 0.75rem;
-            font-size: 0.875rem;
-            color: var(--text-secondary);
-            background: var(--bg-secondary);
-            padding: 0.75rem 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-add:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .btn-add i {
+            font-size: 1.25rem;
+        }
+
+        /* Filter Controls */
+        .filter-controls {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            position: relative;
+            min-width: 300px;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 1.25rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-tertiary);
+            font-size: 1rem;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 1rem 1.25rem 1rem 3rem;
+            border: 2px solid var(--border-light);
             border-radius: 100px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--primary-500);
+            box-shadow: 0 0 0 4px rgba(26, 110, 255, 0.1);
+        }
+
+        .filter-select {
+            min-width: 150px;
+            padding: 1rem 1.25rem;
+            border: 2px solid var(--border-light);
+            border-radius: 100px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2364748b'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 1.5rem;
+            padding-right: 3rem;
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: var(--primary-500);
+            box-shadow: 0 0 0 4px rgba(26, 110, 255, 0.1);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+            backdrop-filter: blur(8px);
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--bg-card);
+            border-radius: 32px;
+            max-width: 800px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: var(--shadow-xl);
+            animation: slideUp 0.3s ease;
             border: 1px solid var(--border-light);
         }
 
-        .prazo-info i {
+        .modal-header {
+            padding: 2rem;
+            border-bottom: 2px solid var(--border-light);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            background: var(--bg-card);
+            border-radius: 32px 32px 0 0;
+            z-index: 10;
+        }
+
+        .modal-header h3 {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .modal-header h3 i {
             color: var(--primary-500);
+        }
+
+        .close-modal {
+            background: var(--bg-secondary);
+            border: 2px solid var(--border-light);
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-secondary);
+            transition: all 0.3s ease;
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-modal:hover {
+            background: var(--danger-500);
+            color: white;
+            border-color: var(--danger-500);
+            transform: rotate(90deg);
+        }
+
+        .modal-body {
+            padding: 2rem;
+        }
+
+        .modal-footer {
+            padding: 2rem;
+            border-top: 2px solid var(--border-light);
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            position: sticky;
+            bottom: 0;
+            background: var(--bg-card);
+            border-radius: 0 0 32px 32px;
         }
 
         /* Form */
@@ -395,7 +562,6 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 1.5rem;
-            margin-bottom: 2rem;
         }
 
         .input-group {
@@ -423,9 +589,7 @@
         }
 
         .input-group input,
-        .input-group textarea,
-        .search-box input,
-        .filter-select {
+        .input-group textarea {
             padding: 1rem 1.25rem;
             border: 2px solid var(--border-light);
             border-radius: 16px;
@@ -437,9 +601,7 @@
         }
 
         .input-group input:focus,
-        .input-group textarea:focus,
-        .search-box input:focus,
-        .filter-select:focus {
+        .input-group textarea:focus {
             outline: none;
             border-color: var(--primary-500);
             box-shadow: 0 0 0 4px rgba(26, 110, 255, 0.1);
@@ -494,7 +656,6 @@
         .btn-primary {
             background: var(--gradient-primary);
             color: white;
-            width: 100%;
         }
 
         .btn-primary:hover:not(:disabled) {
@@ -506,6 +667,11 @@
             background: var(--bg-secondary);
             color: var(--text-primary);
             border: 2px solid var(--border-light);
+        }
+
+        .btn-secondary:hover:not(:disabled) {
+            background: var(--bg-primary);
+            border-color: var(--primary-500);
         }
 
         .btn-success {
@@ -547,43 +713,6 @@
             padding: 0.625rem 1.25rem;
             font-size: 0.875rem;
             border-radius: 12px;
-        }
-
-        /* Filter Controls */
-        .filter-controls {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .search-box {
-            position: relative;
-            min-width: 300px;
-        }
-
-        .search-box i {
-            position: absolute;
-            left: 1.25rem;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-tertiary);
-            font-size: 1rem;
-        }
-
-        .search-box input {
-            width: 100%;
-            padding-left: 3rem;
-        }
-
-        .filter-select {
-            min-width: 150px;
-            cursor: pointer;
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2364748b'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 1rem center;
-            background-size: 1.5rem;
-            padding-right: 3rem;
         }
 
         /* Dividas List */
@@ -819,83 +948,9 @@
             color: var(--danger-500);
         }
 
-        /* Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 2000;
-            align-items: center;
-            justify-content: center;
-            animation: fadeIn 0.3s ease;
-            backdrop-filter: blur(8px);
-        }
-
-        .modal.show {
-            display: flex;
-        }
-
-        .modal-content {
-            background: var(--bg-card);
-            border-radius: 32px;
+        /* Mensagem Preview Modal */
+        .preview-modal .modal-content {
             max-width: 600px;
-            width: 90%;
-            max-height: 80vh;
-            overflow-y: auto;
-            box-shadow: var(--shadow-xl);
-            animation: slideUp 0.3s ease;
-            border: 1px solid var(--border-light);
-        }
-
-        .modal-header {
-            padding: 2rem;
-            border-bottom: 2px solid var(--border-light);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .modal-header h3 {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            color: var(--text-primary);
-            font-size: 1.5rem;
-            font-weight: 700;
-        }
-
-        .modal-header h3 i {
-            color: var(--primary-500);
-        }
-
-        .close-modal {
-            background: var(--bg-secondary);
-            border: 2px solid var(--border-light);
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: var(--text-secondary);
-            transition: all 0.3s ease;
-            width: 40px;
-            height: 40px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .close-modal:hover {
-            background: var(--danger-500);
-            color: white;
-            border-color: var(--danger-500);
-            transform: rotate(90deg);
-        }
-
-        .modal-body {
-            padding: 2rem;
         }
 
         .mensagem-preview {
@@ -908,14 +963,6 @@
             color: var(--text-primary);
             border: 2px solid var(--border-light);
             font-size: 0.95rem;
-        }
-
-        .modal-footer {
-            padding: 2rem;
-            border-top: 2px solid var(--border-light);
-            display: flex;
-            justify-content: flex-end;
-            gap: 1rem;
         }
 
         /* Footer */
@@ -1064,7 +1111,7 @@
             align-items: center;
             gap: 1rem;
             animation: slideUp 0.3s ease;
-            z-index: 1000;
+            z-index: 3000;
             border: 2px solid var(--border-light);
             font-weight: 500;
         }
@@ -1145,6 +1192,7 @@
                 justify-content: center;
                 border-radius: 20px;
                 padding: 1rem;
+                gap: 1.5rem;
             }
 
             .charts-grid {
@@ -1155,6 +1203,11 @@
                 grid-template-columns: 1fr;
             }
 
+            .card-header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
             .filter-controls {
                 flex-direction: column;
                 width: 100%;
@@ -1162,6 +1215,7 @@
 
             .search-box {
                 width: 100%;
+                min-width: auto;
             }
 
             .filter-select {
@@ -1197,20 +1251,31 @@
                 width: 100%;
                 justify-content: center;
             }
+
+            .modal-footer {
+                flex-direction: column;
+            }
+
+            .modal-footer button {
+                width: 100%;
+            }
         }
 
         @media (max-width: 480px) {
-            .card-header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
             .logo h1 {
                 font-size: 1.5rem;
             }
 
             .logo i {
                 font-size: 2rem;
+            }
+
+            .header-stats {
+                flex-wrap: wrap;
+            }
+
+            .stat-item {
+                flex: 1;
             }
 
             .divida-detalhes {
@@ -1222,12 +1287,16 @@
                 width: 100%;
             }
 
-            .modal-footer {
-                flex-direction: column;
+            .modal-header {
+                padding: 1.5rem;
             }
 
-            .modal-footer button {
-                width: 100%;
+            .modal-body {
+                padding: 1.5rem;
+            }
+
+            .modal-footer {
+                padding: 1.5rem;
             }
         }
     </style>
@@ -1275,7 +1344,7 @@
             </div>
 
             <div class="summary-cards">
-                <div class="summary-card total-pendente">
+                <div class="summary-card total-pendente" onclick="abrirModalAdicionar()">
                     <div class="card-icon">
                         <i class="fas fa-clock"></i>
                     </div>
@@ -1306,73 +1375,6 @@
                 </div>
             </div>
 
-            <div class="card form-card">
-                <div class="card-header">
-                    <h2><i class="fas fa-plus-circle"></i> Nova Dívida</h2>
-                    <div class="prazo-info">
-                        <i class="fas fa-info-circle"></i>
-                        <span>Prazo em dias para pagamento</span>
-                    </div>
-                </div>
-                <form id="form-devedor">
-                    <div class="form-grid">
-                        <div class="input-group">
-                            <label for="input-nome">
-                                <i class="fas fa-user"></i> Nome do Devedor
-                            </label>
-                            <input type="text" id="input-nome" required placeholder="Ex: Iraldo Muabsa">
-                        </div>
-
-                        <div class="input-group">
-                            <label for="input-email">
-                                <i class="fas fa-envelope"></i> E-mail
-                            </label>
-                            <input type="email" id="input-email" placeholder="devedor@email.com">
-                        </div>
-
-                        <div class="input-group">
-                            <label for="input-telefone">
-                                <i class="fas fa-phone"></i> WhatsApp / Telefone
-                            </label>
-                            <input type="tel" id="input-telefone" placeholder="Ex: 258846178342">
-                        </div>
-
-                        <div class="input-group">
-                            <label for="input-valor">
-                                <i class="fas fa-money-bill"></i> Valor (MT)
-                            </label>
-                            <input type="number" id="input-valor" step="0.01" min="0" required placeholder="0,00">
-                        </div>
-
-                        <div class="input-group">
-                            <label for="input-data">
-                                <i class="fas fa-calendar"></i> Data da Dívida
-                            </label>
-                            <input type="date" id="input-data" required>
-                        </div>
-
-                        <div class="input-group">
-                            <label for="input-prazo">
-                                <i class="fas fa-hourglass-half"></i> Prazo (dias)
-                            </label>
-                            <input type="number" id="input-prazo" min="1" value="30" required placeholder="30">
-                        </div>
-
-                        <div class="input-group full-width">
-                            <label for="input-observacoes">
-                                <i class="fas fa-comment"></i> Descrição / Observações
-                            </label>
-                            <textarea id="input-observacoes" placeholder="Detalhes sobre a dívida, produtos, serviços, etc..."></textarea>
-                        </div>
-                    </div>
-
-                    <button type="submit" class="btn btn-primary" id="btn-submit">
-                        <i class="fas fa-save"></i>
-                        <span id="btn-text-adicionar">Adicionar Devedor</span>
-                    </button>
-                </form>
-            </div>
-
             <div class="card list-card">
                 <div class="card-header">
                     <h2><i class="fas fa-list"></i> Lista de Devedores</h2>
@@ -1387,6 +1389,10 @@
                             <option value="pago">Pagos</option>
                             <option value="vencido">Vencidos</option>
                         </select>
+                        <button class="btn-add" onclick="abrirModalAdicionar()">
+                            <i class="fas fa-plus-circle"></i>
+                            Nova Dívida
+                        </button>
                     </div>
                 </div>
 
@@ -1441,18 +1447,90 @@
         </footer>
     </div>
 
-    <div id="mensagemModal" class="modal">
+    <!-- Modal Adicionar/Editar Dívida -->
+    <div id="dividaModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-edit"></i> <span id="modal-titulo">Nova Dívida</span></h3>
+                <button class="close-modal" onclick="fecharModalDivida()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="form-devedor">
+                    <div class="form-grid">
+                        <div class="input-group">
+                            <label for="input-nome">
+                                <i class="fas fa-user"></i> Nome do Devedor *
+                            </label>
+                            <input type="text" id="input-nome" required placeholder="Ex: Iraldo Muabsa">
+                        </div>
+
+                        <div class="input-group">
+                            <label for="input-email">
+                                <i class="fas fa-envelope"></i> E-mail
+                            </label>
+                            <input type="email" id="input-email" placeholder="devedor@email.com">
+                        </div>
+
+                        <div class="input-group">
+                            <label for="input-telefone">
+                                <i class="fas fa-phone"></i> WhatsApp / Telefone
+                            </label>
+                            <input type="tel" id="input-telefone" placeholder="Ex: 258846178342">
+                        </div>
+
+                        <div class="input-group">
+                            <label for="input-valor">
+                                <i class="fas fa-money-bill"></i> Valor (MT) *
+                            </label>
+                            <input type="number" id="input-valor" step="0.01" min="0" required placeholder="0,00">
+                        </div>
+
+                        <div class="input-group">
+                            <label for="input-data">
+                                <i class="fas fa-calendar"></i> Data da Dívida *
+                            </label>
+                            <input type="date" id="input-data" required>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="input-prazo">
+                                <i class="fas fa-hourglass-half"></i> Prazo (dias) *
+                            </label>
+                            <input type="number" id="input-prazo" min="1" value="30" required placeholder="30">
+                        </div>
+
+                        <div class="input-group full-width">
+                            <label for="input-observacoes">
+                                <i class="fas fa-comment"></i> Descrição / Observações
+                            </label>
+                            <textarea id="input-observacoes" placeholder="Detalhes sobre a dívida, produtos, serviços, etc..."></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="fecharModalDivida()">Cancelar</button>
+                <button class="btn btn-primary" id="btn-submit" onclick="handleSubmit()">
+                    <i class="fas fa-save"></i>
+                    <span id="btn-text-adicionar">Adicionar Devedor</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Preview Mensagem -->
+    <div id="mensagemModal" class="modal preview-modal">
         <div class="modal-content">
             <div class="modal-header">
                 <h3><i class="fas fa-eye"></i> Visualizar Mensagem</h3>
-                <button class="close-modal" onclick="fecharModal()">&times;</button>
+                <button class="close-modal" onclick="fecharModalMensagem()">&times;</button>
             </div>
             <div class="modal-body">
                 <pre id="mensagemPreview" class="mensagem-preview"></pre>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-secondary" onclick="fecharModal()">Fechar</button>
-                <button class="btn btn-primary" id="copiarMensagemBtn" onclick="copiarMensagemPreview()">
+                <button class="btn btn-secondary" onclick="fecharModalMensagem()">Fechar</button>
+                <button class="btn btn-primary" onclick="copiarMensagemPreview()">
                     <i class="fas fa-copy"></i> Copiar
                 </button>
             </div>
@@ -1466,6 +1544,48 @@
         let editingId = null;
         let statusChart, vencimentoChart;
 
+        // Funções do Modal
+        function abrirModalAdicionar() {
+            editingId = null;
+            document.getElementById('modal-titulo').textContent = 'Nova Dívida';
+            document.getElementById('btn-text-adicionar').textContent = 'Adicionar Devedor';
+            document.getElementById('form-devedor').reset();
+            
+            const hoje = new Date().toISOString().split('T')[0];
+            document.getElementById('input-data').value = hoje;
+            document.getElementById('input-prazo').value = 30;
+            
+            document.getElementById('dividaModal').classList.add('show');
+        }
+
+        function fecharModalDivida() {
+            document.getElementById('dividaModal').classList.remove('show');
+        }
+
+        function abrirModalEditar(id) {
+            const divida = dividas.find(d => d.id === id);
+            if (divida) {
+                editingId = id;
+                document.getElementById('modal-titulo').textContent = 'Editar Dívida';
+                document.getElementById('btn-text-adicionar').textContent = 'Atualizar Devedor';
+                
+                document.getElementById('input-nome').value = divida.nome;
+                document.getElementById('input-email').value = divida.email || '';
+                document.getElementById('input-telefone').value = divida.telefone || '';
+                document.getElementById('input-valor').value = divida.valor;
+                document.getElementById('input-data').value = divida.data || '';
+                document.getElementById('input-prazo').value = divida.prazo || 30;
+                document.getElementById('input-observacoes').value = divida.observacoes || '';
+                
+                document.getElementById('dividaModal').classList.add('show');
+            }
+        }
+
+        function fecharModalMensagem() {
+            document.getElementById('mensagemModal').classList.remove('show');
+        }
+
+        // Tema
         function toggleTheme() {
             const body = document.body;
             const currentTheme = body.getAttribute('data-theme');
@@ -1488,6 +1608,7 @@
             themeIcon.className = savedTheme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
         }
 
+        // Saudação
         function atualizarSaudacao() {
             const hora = new Date().getHours();
             const greeting = document.getElementById('greeting');
@@ -1501,15 +1622,60 @@
             }
         }
 
+        // Dívidas
         function carregarDividas() {
             const dados = localStorage.getItem(STORAGE_KEY);
             if (dados) {
-                dividas = JSON.parse(dados);
-                currentRecordCount = dividas.length;
+                try {
+                    dividas = JSON.parse(dados);
+                } catch {
+                    dividas = [];
+                }
             } else {
-                dividas = [];
-                currentRecordCount = 0;
+                // Dados iniciais para teste
+                dividas = [
+                    {
+                        id: '1',
+                        nome: 'João Silva',
+                        email: 'joao@email.com',
+                        telefone: '258846178342',
+                        valor: 1500.00,
+                        status: 'pendente',
+                        data: '2026-02-20',
+                        prazo: 30,
+                        dataVencimento: '2026-03-22',
+                        observacoes: 'Compra de produtos eletrônicos',
+                        criadoEm: new Date().toISOString()
+                    },
+                    {
+                        id: '2',
+                        nome: 'Maria Santos',
+                        email: 'maria@email.com',
+                        telefone: '258846178343',
+                        valor: 850.50,
+                        status: 'pendente',
+                        data: '2026-01-15',
+                        prazo: 15,
+                        dataVencimento: '2026-01-30',
+                        observacoes: 'Serviços prestados',
+                        criadoEm: new Date().toISOString()
+                    },
+                    {
+                        id: '3',
+                        nome: 'Pedro Oliveira',
+                        email: 'pedro@email.com',
+                        telefone: '258846178344',
+                        valor: 2300.00,
+                        status: 'pago',
+                        data: '2026-02-10',
+                        prazo: 20,
+                        dataVencimento: '2026-03-02',
+                        observacoes: 'Pagamento de mensalidade',
+                        criadoEm: new Date().toISOString()
+                    }
+                ];
             }
+            currentRecordCount = dividas.length;
             atualizarEstatisticas();
             verificarVencimentos();
             renderDividas();
@@ -1539,6 +1705,8 @@
                     
                     divida.diasRestantes = diffDias;
                     divida.estaVencida = diffDias < 0;
+                } else {
+                    divida.estaVencida = false;
                 }
             });
         }
@@ -1576,6 +1744,7 @@
                 "MT " + totalVencidas.toFixed(2).replace('.', ',');
         }
 
+        // Gráficos
         function inicializarGraficos() {
             const ctx1 = document.getElementById('statusChart').getContext('2d');
             const ctx2 = document.getElementById('vencimentoChart').getContext('2d');
@@ -1672,7 +1841,6 @@
 
         function atualizarGraficos() {
             if (!statusChart || !vencimentoChart) {
-                inicializarGraficos();
                 return;
             }
 
@@ -1688,71 +1856,8 @@
             vencimentoChart.update();
         }
 
-        function init() {
-            loadTheme();
-            atualizarSaudacao();
-            carregarDividas();
-            inicializarGraficos();
-            
-            const form = document.getElementById('form-devedor');
-            form.addEventListener('submit', handleSubmit);
-
-            document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
-
-            document.getElementById('search-input').addEventListener('input', function(e) {
-                const termo = e.target.value.toLowerCase();
-                filtrarDividas(termo, document.getElementById('filter-status').value);
-            });
-
-            document.getElementById('filter-status').addEventListener('change', function(e) {
-                const termo = document.getElementById('search-input').value.toLowerCase();
-                filtrarDividas(termo, e.target.value);
-            });
-
-            setInterval(atualizarSaudacao, 60000);
-        }
-
-        function filtrarDividas(termo, status) {
-            let dividasFiltradas = [...dividas];
-
-            if (termo) {
-                dividasFiltradas = dividasFiltradas.filter(d => 
-                    d.nome.toLowerCase().includes(termo) || 
-                    (d.observacoes && d.observacoes.toLowerCase().includes(termo))
-                );
-            }
-
-            if (status !== 'todos') {
-                if (status === 'vencido') {
-                    dividasFiltradas = dividasFiltradas.filter(d => d.estaVencida && d.status === 'pendente');
-                } else {
-                    dividasFiltradas = dividasFiltradas.filter(d => d.status === status);
-                }
-            }
-            
-            renderDividas(dividasFiltradas);
-        }
-
-        function calcularDataVencimento(dataBase, prazoDias) {
-            const data = new Date(dataBase + 'T00:00:00');
-            data.setDate(data.getDate() + prazoDias);
-            return data.toISOString().split('T')[0];
-        }
-
-        function getMensagemDecepcionante(nome, diasAtraso) {
-            const mensagens = [
-                `😔 Olá ${nome}, estou realmente decepcionado... Já se passaram ${diasAtraso} dias do prazo e ainda não recebi seu pagamento.`,
-                `💔 É uma pena ter que cobrar novamente, ${nome}. Sua dívida está há ${diasAtraso} dias vencida.`,
-                `😢 Fico triste em ver que você não cumpriu com o combinado, ${nome}. ${diasAtraso} dias de atraso já passaram.`,
-                `🤔 ${nome}, você sempre foi uma pessoa de palavra. Por que deixou a dívida vencer há ${diasAtraso} dias?`,
-                `💔 Isso não é legal, ${nome}. Sua dívida está vencida há ${diasAtraso} dias e ainda sem pagamento.`
-            ];
-            return mensagens[Math.floor(Math.random() * mensagens.length)];
-        }
-
-        async function handleSubmit(e) {
-            e.preventDefault();
-
+        // Submit
+        async function handleSubmit() {
             const nome = document.getElementById('input-nome').value.trim();
             const email = document.getElementById('input-email').value.trim();
             const telefone = document.getElementById('input-telefone').value.trim();
@@ -1761,7 +1866,7 @@
             const prazo = parseInt(document.getElementById('input-prazo').value);
             const observacoes = document.getElementById('input-observacoes').value;
 
-            if (!nome || isNaN(valor) || valor <= 0 || !prazo) {
+            if (!nome || isNaN(valor) || valor <= 0 || !prazo || !data) {
                 showToast("⚠️ Preencha todos os campos obrigatórios!", "warning");
                 return;
             }
@@ -1778,41 +1883,25 @@
             await new Promise(resolve => setTimeout(resolve, 300));
 
             try {
-                const devedorExistente = dividas.find(d => 
-                    d.nome.toLowerCase() === nome.toLowerCase() && d.id !== editingId && d.status === 'pendente'
-                );
-
-                if (devedorExistente && !editingId) {
-                    devedorExistente.valor += valor;
-                    devedorExistente.email = email || devedorExistente.email;
-                    devedorExistente.telefone = telefone || devedorExistente.telefone;
-                    devedorExistente.data = data;
-                    devedorExistente.dataVencimento = dataVencimento;
-                    devedorExistente.prazo = prazo;
-                    devedorExistente.observacoes = observacoes || devedorExistente.observacoes;
-                    devedorExistente.status = "pendente";
-
-                    salvarDividas();
-                    showToast("✅ Dívida de " + nome + " atualizada! Novo valor: MT " + devedorExistente.valor.toFixed(2));
-                    document.getElementById('form-devedor').reset();
-                    if (editingId) cancelEdit();
-                } else if (editingId) {
-                    const divida = dividas.find(d => d.id === editingId);
-                    if (divida) {
-                        divida.nome = nome;
-                        divida.email = email;
-                        divida.telefone = telefone;
-                        divida.valor = valor;
-                        divida.data = data;
-                        divida.prazo = prazo;
-                        divida.dataVencimento = dataVencimento;
-                        divida.observacoes = observacoes;
-
-                        salvarDividas();
+                if (editingId) {
+                    // Editando
+                    const index = dividas.findIndex(d => d.id === editingId);
+                    if (index !== -1) {
+                        dividas[index] = {
+                            ...dividas[index],
+                            nome,
+                            email,
+                            telefone,
+                            valor,
+                            data,
+                            prazo,
+                            dataVencimento,
+                            observacoes
+                        };
                         showToast("✅ Devedor atualizado com sucesso!");
-                        cancelEdit();
                     }
                 } else {
+                    // Novo
                     if (currentRecordCount >= 999) {
                         showToast("⚠️ Limite de 999 devedores atingido!", "warning");
                         btnSubmit.disabled = false;
@@ -1835,10 +1924,11 @@
                     };
 
                     dividas.push(novaDivida);
-                    salvarDividas();
                     showToast("✅ Devedor adicionado com sucesso!");
-                    document.getElementById('form-devedor').reset();
                 }
+
+                salvarDividas();
+                fecharModalDivida();
             } catch (error) {
                 console.error("Erro:", error);
                 showToast("❌ Erro ao processar a operação. Tente novamente.", "error");
@@ -1848,6 +1938,13 @@
             }
         }
 
+        function calcularDataVencimento(dataBase, prazoDias) {
+            const data = new Date(dataBase + 'T00:00:00');
+            data.setDate(data.getDate() + prazoDias);
+            return data.toISOString().split('T')[0];
+        }
+
+        // Renderização
         function renderDividas(listaParaRenderizar = dividas) {
             const container = document.getElementById('dividas-container');
             
@@ -1856,7 +1953,7 @@
                     <div class="empty-state">
                         <div class="empty-state-icon">💰</div>
                         <h3>Nenhuma dívida encontrada</h3>
-                        <p>Adicione uma nova dívida usando o formulário acima</p>
+                        <p>Clique em "Nova Dívida" para começar</p>
                     </div>
                 `;
                 return;
@@ -1953,7 +2050,7 @@
                                 </button>
                             </div>
                             
-                            <button class="btn btn-small btn-edit" onclick="editarDivida('${divida.id}')" title="Editar">
+                            <button class="btn btn-small btn-edit" onclick="abrirModalEditar('${divida.id}')" title="Editar">
                                 <i class="fas fa-edit"></i>
                             </button>
                             
@@ -1967,10 +2064,22 @@
         }
 
         function formatarTelefone(telefone) {
-            if (telefone.length === 12 && telefone.startsWith('258')) {
+            if (telefone && telefone.length === 12 && telefone.startsWith('258')) {
                 return `+${telefone.slice(0,3)} ${telefone.slice(3,5)} ${telefone.slice(5,8)} ${telefone.slice(8)}`;
             }
             return telefone;
+        }
+
+        // Mensagens
+        function getMensagemDecepcionante(nome, diasAtraso) {
+            const mensagens = [
+                `😔 Olá ${nome}, estou realmente decepcionado... Já se passaram ${diasAtraso} dias do prazo e ainda não recebi seu pagamento.`,
+                `💔 É uma pena ter que cobrar novamente, ${nome}. Sua dívida está há ${diasAtraso} dias vencida.`,
+                `😢 Fico triste em ver que você não cumpriu com o combinado, ${nome}. ${diasAtraso} dias de atraso já passaram.`,
+                `🤔 ${nome}, você sempre foi uma pessoa de palavra. Por que deixou a dívida vencer há ${diasAtraso} dias?`,
+                `💔 Isso não é legal, ${nome}. Sua dívida está vencida há ${diasAtraso} dias e ainda sem pagamento.`
+            ];
+            return mensagens[Math.floor(Math.random() * mensagens.length)];
         }
 
         function getMensagemCobranca(divida, tipo) {
@@ -2024,6 +2133,47 @@
             return mensagemBase;
         }
 
+        // Ações
+        async function marcarComoPago(id) {
+            const divida = dividas.find(d => d.id === id);
+            if (divida) {
+                divida.status = 'pago';
+                divida.dataPagamento = new Date().toISOString();
+                salvarDividas();
+                showToast("✅ Dívida marcada como paga!");
+            }
+        }
+
+        async function marcarComoPendente(id) {
+            const divida = dividas.find(d => d.id === id);
+            if (divida) {
+                divida.status = 'pendente';
+                delete divida.dataPagamento;
+                salvarDividas();
+                showToast("🔄 Dívida reativada!");
+            }
+        }
+
+        async function removerDivida(id) {
+            if (!confirm("🗑️ Tem certeza que deseja remover este devedor?")) {
+                return;
+            }
+            
+            const item = document.querySelector(`[data-id="${id}"]`);
+            if (item) item.style.opacity = '0.5';
+            
+            await new Promise(resolve => setTimeout(resolve, 300));
+            
+            dividas = dividas.filter(d => d.id !== id);
+            salvarDividas();
+            showToast("🗑️ Devedor removido com sucesso!");
+            
+            if (editingId === id) {
+                editingId = null;
+            }
+        }
+
+        // Cobranças
         function enviarCobrancaWhatsApp(id) {
             const divida = dividas.find(d => d.id === id);
             if (!divida) return;
@@ -2073,6 +2223,7 @@
             showToast("📱 Aplicativo de SMS aberto!");
         }
 
+        // Preview
         function mostrarPreviewMensagem(tipo) {
             const modal = document.getElementById('mensagemModal');
             const preview = document.getElementById('mensagemPreview');
@@ -2088,108 +2239,34 @@
             preview.textContent = mensagem;
             
             modal.classList.add('show');
+        }
+
+        // Filtros
+        function filtrarDividas() {
+            const termo = document.getElementById('search-input').value.toLowerCase();
+            const status = document.getElementById('filter-status').value;
             
-            document.getElementById('copiarMensagemBtn').onclick = () => {
-                copiarTexto(mensagem);
-                showToast("📋 Mensagem copiada!");
-            };
-        }
+            let dividasFiltradas = [...dividas];
 
-        function fecharModal() {
-            document.getElementById('mensagemModal').classList.remove('show');
-        }
-
-        async function marcarComoPago(id) {
-            const divida = dividas.find(d => d.id === id);
-            if (divida) {
-                divida.status = 'pago';
-                divida.dataPagamento = new Date().toISOString();
-                
-                const btn = event.target.closest('button');
-                btn.disabled = true;
-                btn.innerHTML = '<span class="loading-spinner"></span>';
-                
-                await new Promise(resolve => setTimeout(resolve, 300));
-                
-                salvarDividas();
-                showToast("✅ Dívida marcada como paga!");
-                
-                btn.disabled = false;
+            if (termo) {
+                dividasFiltradas = dividasFiltradas.filter(d => 
+                    d.nome.toLowerCase().includes(termo) || 
+                    (d.observacoes && d.observacoes.toLowerCase().includes(termo))
+                );
             }
-        }
 
-        async function marcarComoPendente(id) {
-            const divida = dividas.find(d => d.id === id);
-            if (divida) {
-                divida.status = 'pendente';
-                delete divida.dataPagamento;
-                
-                const btn = event.target.closest('button');
-                btn.disabled = true;
-                btn.innerHTML = '<span class="loading-spinner"></span>';
-                
-                await new Promise(resolve => setTimeout(resolve, 300));
-                
-                salvarDividas();
-                showToast("🔄 Dívida reativada!");
-                
-                btn.disabled = false;
-            }
-        }
-
-        function editarDivida(id) {
-            const divida = dividas.find(d => d.id === id);
-            if (divida) {
-                editingId = id;
-                document.getElementById('input-nome').value = divida.nome;
-                document.getElementById('input-email').value = divida.email || '';
-                document.getElementById('input-telefone').value = divida.telefone || '';
-                document.getElementById('input-valor').value = divida.valor;
-                document.getElementById('input-data').value = divida.data || '';
-                document.getElementById('input-prazo').value = divida.prazo || 30;
-                document.getElementById('input-observacoes').value = divida.observacoes || '';
-                
-                const btnText = document.getElementById('btn-text-adicionar');
-                btnText.textContent = 'Atualizar Devedor';
-                
-                document.getElementById('form-devedor').scrollIntoView({ behavior: 'smooth' });
-                showToast("✏️ Editando devedor. Altere os campos e clique em Atualizar.");
-            }
-        }
-
-        function cancelEdit() {
-            editingId = null;
-            document.getElementById('form-devedor').reset();
-            const btnText = document.getElementById('btn-text-adicionar');
-            btnText.textContent = 'Adicionar Devedor';
-            
-            const hoje = new Date().toISOString().split('T')[0];
-            document.getElementById('input-data').value = hoje;
-            document.getElementById('input-prazo').value = 30;
-        }
-
-        async function removerDivida(id) {
-            if (!confirm("🗑️ Tem certeza que deseja remover este devedor?")) {
-                return;
-            }
-            
-            const divida = dividas.find(d => d.id === id);
-            if (divida) {
-                const item = document.querySelector(`[data-id="${id}"]`);
-                if (item) item.style.opacity = '0.5';
-                
-                await new Promise(resolve => setTimeout(resolve, 300));
-                
-                dividas = dividas.filter(d => d.id !== id);
-                salvarDividas();
-                showToast("🗑️ Devedor removido com sucesso!");
-                
-                if (editingId === id) {
-                    cancelEdit();
+            if (status !== 'todos') {
+                if (status === 'vencido') {
+                    dividasFiltradas = dividasFiltradas.filter(d => d.estaVencida && d.status === 'pendente');
+                } else {
+                    dividasFiltradas = dividasFiltradas.filter(d => d.status === status);
                 }
             }
+            
+            renderDividas(dividasFiltradas);
         }
 
+        // Utilitários
         function copiarTexto(texto) {
             navigator.clipboard.writeText(texto).then(() => {
                 showToast("📋 Copiado!");
@@ -2222,30 +2299,59 @@
             }, 3000);
         }
 
-        document.addEventListener('DOMContentLoaded', init);
+        // Inicialização
+        function init() {
+            loadTheme();
+            atualizarSaudacao();
+            carregarDividas();
+            inicializarGraficos();
 
-        window.onload = function() {
-            const hoje = new Date().toISOString().split('T')[0];
-            document.getElementById('input-data').value = hoje;
-        };
+            document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
 
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                fecharModal();
-            }
-        });
+            document.getElementById('search-input').addEventListener('input', filtrarDividas);
+            document.getElementById('filter-status').addEventListener('change', filtrarDividas);
 
-        window.copiarTexto = copiarTexto;
-        window.mostrarPreviewMensagem = mostrarPreviewMensagem;
-        window.fecharModal = fecharModal;
+            setInterval(atualizarSaudacao, 60000);
+
+            // Fechar modais com ESC
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    fecharModalDivida();
+                    fecharModalMensagem();
+                }
+            });
+
+            // Fechar modais clicando fora
+            window.addEventListener('click', function(e) {
+                const modalDivida = document.getElementById('dividaModal');
+                const modalMensagem = document.getElementById('mensagemModal');
+                
+                if (e.target === modalDivida) {
+                    fecharModalDivida();
+                }
+                if (e.target === modalMensagem) {
+                    fecharModalMensagem();
+                }
+            });
+        }
+
+        // Exportar funções para o escopo global
+        window.abrirModalAdicionar = abrirModalAdicionar;
+        window.abrirModalEditar = abrirModalEditar;
+        window.fecharModalDivida = fecharModalDivida;
+        window.fecharModalMensagem = fecharModalMensagem;
+        window.handleSubmit = handleSubmit;
+        window.marcarComoPago = marcarComoPago;
+        window.marcarComoPendente = marcarComoPendente;
+        window.removerDivida = removerDivida;
         window.enviarCobrancaWhatsApp = enviarCobrancaWhatsApp;
         window.enviarCobrancaEmail = enviarCobrancaEmail;
         window.enviarCobrancaSMS = enviarCobrancaSMS;
-        window.marcarComoPago = marcarComoPago;
-        window.marcarComoPendente = marcarComoPendente;
-        window.editarDivida = editarDivida;
-        window.removerDivida = removerDivida;
+        window.mostrarPreviewMensagem = mostrarPreviewMensagem;
+        window.copiarTexto = copiarTexto;
         window.copiarMensagemPreview = copiarMensagemPreview;
+
+        document.addEventListener('DOMContentLoaded', init);
     </script>
 </body>
 </html>
